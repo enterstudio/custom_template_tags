@@ -1,4 +1,5 @@
 <?php
+
 /*
   Plugin Name: Custom Template Tags
   Plugin URI: http://codeandnotes.com
@@ -27,28 +28,77 @@
 
  */
 
-require_once 'helpers.php';
+class CMT {
 
-class CMT extends Helpers {
-    
-    public static function __callStatic($method , $args) {
-        
-        if (substr($method , 0 , 4) === "the_") {
+    public static function __callStatic($method, $args) {
+
+        if (substr($method, 0, 4) === "the_") {
+
+            echo get_post_meta(get_the_ID(), substr($method, 4), true);
             
-            echo get_post_meta(get_the_ID(), substr($method , 4) , true); 
+        } else if (substr($method, 0, 8) === "get_the_") {
+
+            return get_post_meta(get_the_ID(), substr($method, 8), true);
             
-        } else if (substr($method ,  0 , 8) === "get_the_") {
-            
-            return  get_post_meta(get_the_ID(), substr($method , 8) , true); 
-            
-        } else if (substr($method , -7) === "_exists") {
-            
-            return get_post_meta(get_the_ID(), substr($method , 0 , -7) , true) === "" ? false : true; 
+        } else if (substr($method, -7) === "_exists") {
+
+            return get_post_meta(get_the_ID(), substr($method, 0, -7), true) === "" ? false : true;
             
         }
-        
     }
-    
+
+}
+
+class CTT {
+
+    public static function __callStatic($method, $args) {
+
+        if (substr($method, 0, 4) == 'the_') {
+            
+            $term = substr($method, 4); 
+            
+            $list = self::handle_terms($term ,$args); 
+
+            echo gettype($list) == "string" ? $list : ''; 
+            
+        } else if (substr($method, 0, 8) === "get_the_") {
+            
+            $term = substr($method, 8); 
+            
+            $list = self::handle_terms($term ,$args); 
+            
+            return gettype($list) == "string" ? $list : '';   
+            
+        } else if (substr($method, -7) === "_exists") {
+
+            $obj  = get_the_terms( get_the_ID() , substr($method, 0, -7) ); 
+            
+            return $obj && !is_wp_error($obj) ? true : false;  
+        }
+    }
+
+    private static function handle_terms($term , $args) {
+
+        isset($args[0]) ? $seperator = $args[0] : $seperator = false;
+        
+        if ($seperator == false) {
+
+            $str = '<ul class="post-' . $term . '" >';
+
+            $str .= get_the_term_list(get_the_ID(), $term, '<li>', "</li><li>", "</li>");
+
+            $str .= "</ul>";
+
+            return $str;
+            
+        } else {
+            
+            $str = get_the_term_list(get_the_ID(), $term, '', $seperator , '');
+            
+            return $str; 
+            
+        }
+    }
 
 }
 
