@@ -24,13 +24,13 @@ Also, an extra isset function can be used that appends your key with "exists"
 
 Methods can be called on the `CTT` namespace. Assume 'custom_taxonomy' is the name of the custom taxonomy you are calling. Usage mimics `the_tags()`.
 
-`CTT::the_custom_taxnonomy`
+`CTT::the_custom_taxnonomy()`
 
-`CTT::get_the_custom_taxonomy`
+`CTT::get_the_custom_taxonomy()`
 
 Also, an extra isset function can be used that appends your taxonomy with "exists"
 
-`CTT::custom_taxnonomy_exists`
+`CTT::custom_taxnonomy_exists()`
 
 ###Usage
 
