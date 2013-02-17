@@ -22,7 +22,7 @@ Also, an extra isset function called that appends you key with "exists"
 
 ###Custom Taxonomy Tags or CTT
 
-Methods can be called on the `CTT` namespace. Assume 'custom_taxonomy' is the name of your custom taxonomy you are calling. Usage micmics `the_tags()`.
+Methods can be called on the `CTT` namespace. Assume 'custom_taxonomy' is the name of your custom taxonomy you are calling. Usage mimics `the_tags()`.
 
 `CTT::the_custom_taxnonomy`
 
