@@ -62,6 +62,8 @@ class CMT {
 
                return get_post_meta(get_the_ID(), substr($method, 0, -7), true) === "" ? false : true;
                
+               
+               
           } else {
                
                return false;
